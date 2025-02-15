@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.js"></script>
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
     <div class="container">
@@ -96,26 +95,55 @@
             <label for="caseNumber">شماره پرونده:</label>
             <input type="text" id="caseNumber" name="caseNumber">
 
-            <!-- فیلدهای شماره تلفن با منوی آبشاری -->
-            <label for="plaintiff">نام خواهان با شماره تماس:</label>
+            <!-- فیلدهای مربوط به نام خواهان، خوانده، اعضای هیأت و کارشناسان -->
             <div class="dropdown-container">
-                <textarea id="plaintiff" name="plaintiff" class="dropdown-input" rows="1"></textarea>
-                <span class="dropdown-arrow">&#9660;</span>
+                <label for="plaintiffInput">نام خواهان با شماره تماس:</label>
+                <div class="input-with-arrow">
+                    <button class="add-button" onclick="addOption('plaintiffInput', 'plaintiffDropdown')">+</button>
+                    <input type="text" id="plaintiffInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('plaintiffDropdown')" onblur="hideDropdown('plaintiffDropdown')">
+                    <span class="dropdown-arrow" onclick="toggleDropdown('plaintiffDropdown')">&#9660;</span>
+                </div>
                 <div id="plaintiffDropdown" class="dropdown-menu"></div>
             </div>
 
-            <label for="defendant">نام خوانده با شماره تماس:</label>
             <div class="dropdown-container">
-                <textarea id="defendant" name="defendant" class="dropdown-input" rows="1"></textarea>
-                <span class="dropdown-arrow">&#9660;</span>
+                <label for="defendantInput">نام خوانده با شماره تماس:</label>
+                <div class="input-with-arrow">
+                    <button class="add-button" onclick="addOption('defendantInput', 'defendantDropdown')">+</button>
+                    <input type="text" id="defendantInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('defendantDropdown')" onblur="hideDropdown('defendantDropdown')">
+                    <span class="dropdown-arrow" onclick="toggleDropdown('defendantDropdown')">&#9660;</span>
+                </div>
                 <div id="defendantDropdown" class="dropdown-menu"></div>
             </div>
 
-            <label for="panelMembers">اعضای هیأت کارشناسی با شماره تماس:</label>
             <div class="dropdown-container">
-                <textarea id="panelMembers" name="panelMembers" class="dropdown-input" rows="1"></textarea>
-                <span class="dropdown-arrow">&#9660;</span>
+                <label for="panelMembersInput">اعضای هیأت با شماره تماس:</label>
+                <div class="input-with-arrow">
+                    <button class="add-button" onclick="addOption('panelMembersInput', 'panelMembersDropdown')">+</button>
+                    <input type="text" id="panelMembersInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('panelMembersDropdown')" onblur="hideDropdown('panelMembersDropdown')">
+                    <span class="dropdown-arrow" onclick="toggleDropdown('panelMembersDropdown')">&#9660;</span>
+                </div>
                 <div id="panelMembersDropdown" class="dropdown-menu"></div>
+            </div>
+
+            <div class="dropdown-container">
+                <label for="cooperatedExpertsInput">کارشناسان هیأت که همکاری کردند:</label>
+                <div class="input-with-arrow">
+                    <button class="add-button" onclick="addOption('cooperatedExpertsInput', 'cooperatedExpertsDropdown')">+</button>
+                    <input type="text" id="cooperatedExpertsInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('cooperatedExpertsDropdown')" onblur="hideDropdown('cooperatedExpertsDropdown')">
+                    <span class="dropdown-arrow" onclick="toggleDropdown('cooperatedExpertsDropdown')">&#9660;</span>
+                </div>
+                <div id="cooperatedExpertsDropdown" class="dropdown-menu"></div>
+            </div>
+
+            <div class="dropdown-container">
+                <label for="nonCooperatedExpertsInput">کارشناسان هیأت که همکاری نکردند:</label>
+                <div class="input-with-arrow">
+                    <button class="add-button" onclick="addOption('nonCooperatedExpertsInput', 'nonCooperatedExpertsDropdown')">+</button>
+                    <input type="text" id="nonCooperatedExpertsInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('nonCooperatedExpertsDropdown')" onblur="hideDropdown('nonCooperatedExpertsDropdown')">
+                    <span class="dropdown-arrow" onclick="toggleDropdown('nonCooperatedExpertsDropdown')">&#9660;</span>
+                </div>
+                <div id="nonCooperatedExpertsDropdown" class="dropdown-menu"></div>
             </div>
 
             <!-- فیلد تاریخ ارسال گزارش -->
@@ -125,21 +153,6 @@
             <!-- فیلد کد رهگیری -->
             <label for="trackingCode">کد رهگیری:</label>
             <input type="text" id="trackingCode" name="trackingCode">
-
-            <!-- سایر فیلدها با منوی آبشاری -->
-            <label for="cooperatedExperts">کارشناسان هیأت که همکاری کردند:</label>
-            <div class="dropdown-container">
-                <textarea id="cooperatedExperts" name="cooperatedExperts" class="dropdown-input" rows="1"></textarea>
-                <span class="dropdown-arrow">&#9660;</span>
-                <div id="cooperatedExpertsDropdown" class="dropdown-menu"></div>
-            </div>
-
-            <label for="nonCooperatedExperts">کارشناسان هیأت که همکاری نکردند:</label>
-            <div class="dropdown-container">
-                <textarea id="nonCooperatedExperts" name="nonCooperatedExperts" class="dropdown-input" rows="1"></textarea>
-                <span class="dropdown-arrow">&#9660;</span>
-                <div id="nonCooperatedExpertsDropdown" class="dropdown-menu"></div>
-            </div>
 
             <!-- ردیف پنجم: مبلغ و وضعیت -->
             <div class="form-row">
@@ -215,6 +228,5 @@
     </div>
 
     <script src="script.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
