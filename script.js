@@ -1,19 +1,19 @@
 let data = [];
 let searchResults = [];
 let currentIndex = -1;
-let isEditing = false; // برای تشخیص حالت ویرایش
+let isEditing = false;
 
 // تابع تبدیل اعداد به فرمت تاریخ شمسی
 function formatDateInput(input) {
-    const value = input.value.replace(/\D/g, ''); // حذف همه کاراکترهای غیرعددی
+    const value = input.value.replace(/\D/g, '');
     if (value.length === 8) {
         const year = value.slice(0, 4);
         const month = value.slice(4, 6);
         const day = value.slice(6, 8);
-        input.value = `${year}/${month}/${day}`; // تبدیل به فرمت تاریخ
+        input.value = `${year}/${month}/${day}`;
     } else {
         alert('تاریخ وارد شده نامعتبر است!');
-        input.value = ''; // پاک کردن فیلد اگر طول تاریخ نامعتبر باشد
+        input.value = '';
     }
 }
 
@@ -27,22 +27,20 @@ function saveData() {
     });
 
     if (isEditing && currentIndex !== -1 && searchResults[currentIndex]) {
-        // به‌روزرسانی رکورد موجود
         const originalRecord = searchResults[currentIndex];
         const indexInData = data.findIndex(record => JSON.stringify(record) === JSON.stringify(originalRecord));
         if (indexInData !== -1) {
-            data[indexInData] = entry; // به‌روزرسانی رکورد در داده‌ها
-            searchResults[currentIndex] = entry; // به‌روزرسانی رکورد در نتایج جستجو
+            data[indexInData] = entry;
+            searchResults[currentIndex] = entry;
             alert('اطلاعات با موفقیت به‌روزرسانی شد!');
         }
     } else {
-        // ایجاد رکورد جدید
         data.push(entry);
         alert('اطلاعات با موفقیت ثبت شد!');
     }
 
     form.reset();
-    isEditing = false; // حالت ویرایش غیرفعال می‌شود
+    isEditing = false;
 }
 
 // تابع جستجو
@@ -68,9 +66,7 @@ function searchData() {
     updateFormWithResult(searchResults[currentIndex]);
     updateNavigationButtons();
     updateResultCount();
-    isEditing = true; // فعال کردن حالت ویرایش
-
-    // پاک کردن فیلد جستجو
+    isEditing = true;
     document.getElementById('searchTerm').value = '';
 }
 
@@ -128,7 +124,7 @@ function deleteData() {
         return JSON.stringify(entry) !== JSON.stringify(currentRecord);
     });
 
-    searchResults.splice(currentIndex, 1); // حذف رکورد از نتایج جستجو
+    searchResults.splice(currentIndex, 1);
 
     if (searchResults.length === 0) {
         alert('رکورد حذف شد و دیگر نتیجه‌ای وجود ندارد.');
@@ -147,13 +143,13 @@ function deleteData() {
 function clearForm() {
     document.getElementById('form').reset();
     alert('فرم با موفقیت پاک شد!');
-    isEditing = false; // حالت ویرایش غیرفعال می‌شود
+    isEditing = false;
 }
 
 // تابع فرمت‌دهی تاریخ شمسی هنگام خروج از فیلد
 function formatDateOnBlur(event) {
     const input = event.target;
-    formatDateInput(input); // تبدیل اعداد به فرمت تاریخ
+    formatDateInput(input);
 }
 
 // مدیریت Modal برای تماس یا پیامک
@@ -188,7 +184,7 @@ function sendSms() {
 
 // تابع استخراج شماره تماس از متن
 function extractPhoneNumber(text) {
-    const phoneRegex = /(\+98|0)?9\d{9}/g; // الگو برای شماره موبایل ایرانی
+    const phoneRegex = /(\+98|0)?9\d{9}/g;
     const matches = text.match(phoneRegex);
     return matches ? matches[0] : null;
 }
