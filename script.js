@@ -1,8 +1,3 @@
-let data = [];
-let searchResults = [];
-let currentIndex = -1;
-let isEditing = false;
-
 // تابع نمایش یا مخفی کردن منوی آبشاری
 function toggleDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
