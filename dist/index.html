@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت اطلاعات ابلاغیه</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>ثبت اطلاعات ابلاغیه</h1>
+        <form id="form">
+            <!-- ردیف اول: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="type">نوع قرار:</label>
+                    <select id="type" name="type">
+                        <option value="">انتخاب کنید</option>
+                        <option value="کارشناسی">کارشناسی</option>
+                        <option value="تامین دلیل">تامین دلیل</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">تاریخ ابلاغیه:</label>
+                    <input type="text" id="date" name="date" placeholder="yyyy/mm/dd">
+                </div>
+            </div>
+
+            <!-- ردیف دوم: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="courtType">بدوی یا تکمیلی:</label>
+                    <select id="courtType" name="courtType">
+                        <option value="">انتخاب کنید</option>
+                        <option value="بدوی">بدوی</option>
+                        <option value="تکمیلی">تکمیلی</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="individualOrPanel">انفرادی-هیأت:</label>
+                    <select id="individualOrPanel" name="individualOrPanel">
+                        <option value="">انتخاب کنید</option>
+                        <option value="انفرادی">انفرادی</option>
+                        <option value="هیأت">هیأت</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ردیف سوم: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="city">شهر:</label>
+                    <select id="city" name="city">
+                        <option value="">انتخاب کنید</option>
+                        <option value="زنجان">زنجان</option>
+                        <option value="ابهر">ابهر</option>
+                        <option value="خرمدره">خرمدره</option>
+                        <option value="خدابنده">خدابنده</option>
+                        <option value="ماهنشان">ماهنشان</option>
+                        <option value="طارم">طارم</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="courtCategory">نوع دادگاه:</label>
+                    <select id="courtCategory" name="courtCategory">
+                        <option value="">انتخاب کنید</option>
+                        <option value="حقوقی">حقوقی</option>
+                        <option value="کیفری">کیفری</option>
+                        <option value="بازپرسی">بازپرسی</option>
+                        <option value="دادیاری">دادیاری</option>
+                        <option value="صلح">صلح</option>
+                        <option value="تجدیدنظر">تجدیدنظر</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ردیف چهارم: شماره شعبه و شماره بایگانی -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branchNumber">شماره شعبه:</label>
+                    <input type="text" id="branchNumber" name="branchNumber">
+                </div>
+                <div class="form-group">
+                    <label for="archiveNumber">شماره بایگانی:</label>
+                    <input type="text" id="archiveNumber" name="archiveNumber">
+                </div>
+            </div>
+
+            <!-- سایر فیلدها -->
+            <label for="noticeNumber">شماره ابلاغیه:</label>
+            <input type="text" id="noticeNumber" name="noticeNumber">
+
+            <label for="caseNumber">شماره پرونده:</label>
+            <input type="text" id="caseNumber" name="caseNumber">
+
+            <!-- فیلدهای شماره تلفن با منوی آبشاری -->
+            <label for="plaintiffInput">نام خواهان با شماره تماس:</label>
+            <div class="input-with-arrow">
+                <input type="text" id="plaintiffInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('plaintiffDropdown')" onblur="hideDropdown('plaintiffDropdown')">
+                <span class="dropdown-arrow" onclick="toggleDropdown('plaintiffDropdown')">&#9660;</span>
+                <button class="add-button" onclick="addOption('plaintiffInput', 'plaintiffDropdown')">+</button>
+            </div>
+            <div id="plaintiffDropdown" class="dropdown-menu"></div>
+
+            <label for="defendantInput">نام خوانده با شماره تماس:</label>
+            <div class="input-with-arrow">
+                <input type="text" id="defendantInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('defendantDropdown')" onblur="hideDropdown('defendantDropdown')">
+                <span class="dropdown-arrow" onclick="toggleDropdown('defendantDropdown')">&#9660;</span>
+                <button class="add-button" onclick="addOption('defendantInput', 'defendantDropdown')">+</button>
+            </div>
+            <div id="defendantDropdown" class="dropdown-menu"></div>
+
+            <label for="panelMembersInput">اعضای هیأت با شماره تماس:</label>
+            <div class="input-with-arrow">
+                <input type="text" id="panelMembersInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('panelMembersDropdown')" onblur="hideDropdown('panelMembersDropdown')">
+                <span class="dropdown-arrow" onclick="toggleDropdown('panelMembersDropdown')">&#9660;</span>
+                <button class="add-button" onclick="addOption('panelMembersInput', 'panelMembersDropdown')">+</button>
+            </div>
+            <div id="panelMembersDropdown" class="dropdown-menu"></div>
+
+            <!-- فیلد تاریخ ارسال گزارش -->
+            <label for="reportDate">تاریخ ارسال گزارش:</label>
+            <input type="text" id="reportDate" name="reportDate" placeholder="yyyy/mm/dd">
+
+            <!-- فیلد کد رهگیری -->
+            <label for="trackingCode">کد رهگیری:</label>
+            <input type="text" id="trackingCode" name="trackingCode">
+
+            <!-- سایر فیلدها با منوی آبشاری -->
+            <label for="cooperatedExpertsInput">کارشناسان هیأت که همکاری کردند:</label>
+            <div class="input-with-arrow">
+                <input type="text" id="cooperatedExpertsInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('cooperatedExpertsDropdown')" onblur="hideDropdown('cooperatedExpertsDropdown')">
+                <span class="dropdown-arrow" onclick="toggleDropdown('cooperatedExpertsDropdown')">&#9660;</span>
+                <button class="add-button" onclick="addOption('cooperatedExpertsInput', 'cooperatedExpertsDropdown')">+</button>
+            </div>
+            <div id="cooperatedExpertsDropdown" class="dropdown-menu"></div>
+
+            <label for="nonCooperatedExpertsInput">کارشناسان هیأت که همکاری نکردند:</label>
+            <div class="input-with-arrow">
+                <input type="text" id="nonCooperatedExpertsInput" placeholder="مقدار را وارد کنید" onfocus="showDropdown('nonCooperatedExpertsDropdown')" onblur="hideDropdown('nonCooperatedExpertsDropdown')">
+                <span class="dropdown-arrow" onclick="toggleDropdown('nonCooperatedExpertsDropdown')">&#9660;</span>
+                <button class="add-button" onclick="addOption('nonCooperatedExpertsInput', 'nonCooperatedExpertsDropdown')">+</button>
+            </div>
+            <div id="nonCooperatedExpertsDropdown" class="dropdown-menu"></div>
+
+            <!-- ردیف پنجم: مبلغ و وضعیت -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="amount">مبلغ:</label>
+                    <input type="text" id="amount" name="amount">
+                </div>
+                <div class="form-group">
+                    <label for="status">وضعیت:</label>
+                    <select id="status" name="status">
+                        <option value="">انتخاب کنید</option>
+                        <option value="دریافت شده">دریافت شده</option>
+                        <option value="دریافت نشده">دریافت نشده</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- دکمه‌های ثبت، حذف و پاک کردن فرم -->
+            <div class="button-row">
+                <button type="button" id="saveButton">ثبت اطلاعات</button>
+                <button type="button" id="deleteButton">حذف اطلاعات</button>
+                <button type="button" id="clearButton">پاک کردن فرم</button>
+            </div>
+        </form>
+
+        <!-- بخش جستجو -->
+        <div class="search-section">
+            <!-- سطر اول: فیلد جستجو و دکمه جستجو -->
+            <div class="search-row">
+                <label for="searchField">جستجو بر اساس:</label>
+                <select id="searchField">
+                    <option value="type">نوع قرار</option>
+                    <option value="date">تاریخ ابلاغیه</option>
+                    <option value="courtType">بدوی یا تکمیلی</option>
+                    <option value="individualOrPanel">انفرادی-هیأت</option>
+                    <option value="city">شهر</option>
+                    <option value="courtCategory">نوع دادگاه</option>
+                    <option value="branchNumber">شماره شعبه</option>
+                    <option value="archiveNumber">شماره بایگانی</option>
+                    <option value="noticeNumber">شماره ابلاغیه</option>
+                    <option value="caseNumber">شماره پرونده</option>
+                    <option value="plaintiff">نام خواهان با شماره تماس</option>
+                    <option value="defendant">نام خوانده با شماره تماس</option>
+                    <option value="panelMembers">اعضای هیأت کارشناسی با شماره تماس</option>
+                    <option value="reportDate">تاریخ ارسال گزارش</option>
+                    <option value="trackingCode">کد رهگیری</option>
+                    <option value="cooperatedExperts">کارشناسان هیأت که همکاری کردند</option>
+                    <option value="nonCooperatedExperts">کارشناسان هیأت که همکاری نکردند</option>
+                    <option value="amount">مبلغ</option>
+                    <option value="status">وضعیت</option>
+                </select>
+                <input type="text" id="searchTerm" placeholder="عبارت جستجو را وارد کنید">
+                <button type="button" id="searchButton">جستجو</button>
+            </div>
+
+            <!-- سطر دوم: تعداد نتایج و دکمه‌های قبلی و بعدی -->
+            <div class="navigation-row">
+                <input type="text" id="resultCount" placeholder="تعداد نتایج" readonly>
+                <button type="button" id="prevButton" disabled>قبلی</button>
+                <button type="button" id="nextButton" disabled>بعدی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal برای انتخاب تماس یا پیامک -->
+    <div id="phoneModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalPhoneNumber"></p>
+            <button id="callButton">تماس</button>
+            <button id="smsButton">ارسال پیامک</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
