@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     direction: rtl;
-    padding: 20px;
+    padding: 4mm; /* فاصله از حاشیه‌ها */
     background-color: #f4f4f4;
     margin: 0;
 }
@@ -27,20 +27,19 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 3mm; /* فاصله بین فیلدها */
 }
 
 .form-row {
     display: flex;
-    gap: 0.5cm;
-    margin-bottom: 15px;
+    gap: 3mm; /* فاصله بین فیلدها */
+    margin-bottom: 3mm; /* فاصله بین ردیف‌ها */
 }
 
 .form-group {
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin: 0 0.25cm;
 }
 
 label {
@@ -69,7 +68,7 @@ input:focus, select:focus, textarea:focus {
 /* استایل‌های دکمه‌ها */
 .button-row {
     display: flex;
-    gap: 0.5cm;
+    gap: 3mm; /* فاصله بین دکمه‌ها */
     margin-top: 15px;
 }
 
@@ -251,33 +250,55 @@ button:active {
 .dropdown-container {
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 3mm; /* فاصله بین فیلدها */
 }
 
 .input-with-arrow {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.dropdown-input {
-    width: calc(100% - 1cm);
-    padding: 10px 30px 10px 10px;
+    gap: 3mm; /* فاصله بین عناصر داخل فیلد */
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 4mm; /* فاصله از حاشیه‌های داخلی */
     background-color: #fff;
-    cursor: pointer;
-    resize: none;
-    overflow: hidden;
-    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-with-arrow input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
 }
 
 .dropdown-arrow {
     cursor: pointer;
-    font-size: 12px;
+    font-size: 16px;
     color: #555;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-arrow:hover {
+    background-color: #ddd;
+}
+
+.add-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #218838;
 }
 
 .dropdown-menu {
@@ -299,6 +320,7 @@ button:active {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
 }
 
 .dropdown-menu div:last-child {

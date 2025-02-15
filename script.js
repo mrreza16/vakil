@@ -3,17 +3,30 @@ let searchResults = [];
 let currentIndex = -1;
 let isEditing = false;
 
-// تابع تبدیل اعداد به فرمت تاریخ شمسی
-function formatDateInput(input) {
-    const value = input.value.replace(/\D/g, '');
-    if (value.length === 8) {
-        const year = value.slice(0, 4);
-        const month = value.slice(4, 6);
-        const day = value.slice(6, 8);
-        input.value = `${year}/${month}/${day}`;
+// تابع نمایش یا مخفی کردن منوی آبشاری
+function toggleDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+// تابع افزودن گزینه به فیلد
+function addOption(inputId, dropdownId) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    const value = input.value.trim();
+
+    if (value) {
+        // ایجاد گزینه جدید
+        const option = document.createElement('div');
+        option.textContent = value;
+        option.onclick = () => {
+            input.value = value; // مقدار را در فیلد قرار می‌دهد
+            dropdown.style.display = 'none'; // منو را می‌بندد
+        };
+        dropdown.appendChild(option); // گزینه را به منو اضافه می‌کند
+        input.value = ''; // فیلد را پاک می‌کند
     } else {
-        alert('تاریخ وارد شده نامعتبر است!');
-        input.value = '';
+        alert('لطفاً مقداری وارد کنید!');
     }
 }
 
@@ -30,17 +43,17 @@ function saveData() {
         const originalRecord = searchResults[currentIndex];
         const indexInData = data.findIndex(record => JSON.stringify(record) === JSON.stringify(originalRecord));
         if (indexInData !== -1) {
-            data[indexInData] = entry;
-            searchResults[currentIndex] = entry;
+            data[indexInData] = entry; // به‌روزرسانی رکورد در داده‌ها
+            searchResults[currentIndex] = entry; // به‌روزرسانی رکورد در نتایج جستجو
             alert('اطلاعات با موفقیت به‌روزرسانی شد!');
         }
     } else {
-        data.push(entry);
+        data.push(entry); // ایجاد رکورد جدید
         alert('اطلاعات با موفقیت ثبت شد!');
     }
 
     form.reset();
-    isEditing = false;
+    isEditing = false; // حالت ویرایش غیرفعال می‌شود
 }
 
 // تابع جستجو
@@ -66,7 +79,9 @@ function searchData() {
     updateFormWithResult(searchResults[currentIndex]);
     updateNavigationButtons();
     updateResultCount();
-    isEditing = true;
+    isEditing = true; // فعال کردن حالت ویرایش
+
+    // پاک کردن فیلد جستجو
     document.getElementById('searchTerm').value = '';
 }
 
@@ -124,7 +139,7 @@ function deleteData() {
         return JSON.stringify(entry) !== JSON.stringify(currentRecord);
     });
 
-    searchResults.splice(currentIndex, 1);
+    searchResults.splice(currentIndex, 1); // حذف رکورد از نتایج جستجو
 
     if (searchResults.length === 0) {
         alert('رکورد حذف شد و دیگر نتیجه‌ای وجود ندارد.');
@@ -143,13 +158,22 @@ function deleteData() {
 function clearForm() {
     document.getElementById('form').reset();
     alert('فرم با موفقیت پاک شد!');
-    isEditing = false;
+    isEditing = false; // حالت ویرایش غیرفعال می‌شود
 }
 
 // تابع فرمت‌دهی تاریخ شمسی هنگام خروج از فیلد
 function formatDateOnBlur(event) {
     const input = event.target;
-    formatDateInput(input);
+    const value = input.value.replace(/\D/g, '');
+    if (value.length === 8) {
+        const year = value.slice(0, 4);
+        const month = value.slice(4, 6);
+        const day = value.slice(6, 8);
+        input.value = `${year}/${month}/${day}`;
+    } else {
+        alert('تاریخ وارد شده نامعتبر است!');
+        input.value = '';
+    }
 }
 
 // مدیریت Modal برای تماس یا پیامک
@@ -189,32 +213,37 @@ function extractPhoneNumber(text) {
     return matches ? matches[0] : null;
 }
 
-// افزودن رویداد کلیک به فیلدهای مربوط به شماره تماس
+// مدیریت رویدادها
 document.addEventListener('DOMContentLoaded', () => {
-    const phoneFields = ['plaintiff', 'defendant', 'panelMembers'];
-    phoneFields.forEach(fieldId => {
-        const textarea = document.getElementById(fieldId);
-        textarea.addEventListener('click', () => {
-            const phoneNumber = extractPhoneNumber(textarea.value);
-            if (phoneNumber) {
-                showPhoneModal(phoneNumber);
-            } else {
-                alert('شماره تماس معتبری یافت نشد!');
-            }
+    // بستن منوهای آبشاری با کلیک خارج از آنها
+    window.addEventListener('click', (event) => {
+        if (!event.target.matches('.dropdown-arrow') && !event.target.matches('.add-button')) {
+            const dropdowns = document.querySelectorAll('.dropdown-menu');
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+        }
+    });
+
+    // افزودن رویداد کلیک به مثلث‌ها برای باز کردن منوها
+    const dropdownArrows = document.querySelectorAll('.dropdown-arrow');
+    dropdownArrows.forEach(arrow => {
+        arrow.addEventListener('click', (event) => {
+            event.stopPropagation(); // جلوگیری از بسته شدن منو
+            const dropdownId = arrow.getAttribute('onclick').match(/'(.*?)'/)[1];
+            toggleDropdown(dropdownId);
         });
     });
 
-    // رویدادهای Modal
-    document.getElementById('callButton').addEventListener('click', makeCall);
-    document.getElementById('smsButton').addEventListener('click', sendSms);
-    document.querySelector('.close').addEventListener('click', closePhoneModal);
-
-    // بستن Modal با کلیک خارج از آن
-    window.addEventListener('click', (event) => {
-        const modal = document.getElementById('phoneModal');
-        if (event.target === modal) {
-            closePhoneModal();
-        }
+    // افزودن رویداد کلیک به دکمه‌های + برای ثبت مقادیر
+    const addButtons = document.querySelectorAll('.add-button');
+    addButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // جلوگیری از بسته شدن منو
+            const onclickAttribute = button.getAttribute('onclick');
+            const [inputId, dropdownId] = onclickAttribute.match(/'(.*?)'/g).map(match => match.replace(/'/g, ''));
+            addOption(inputId, dropdownId);
+        });
     });
 
     // افزودن رویداد blur برای فیلدهای تاریخ
