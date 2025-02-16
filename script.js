@@ -17,6 +17,15 @@ function addOption(inputId, dropdownId) {
     const value = input.value.trim();
 
     if (value) {
+        // بررسی تکراری نبودن مقدار
+        const existingOptions = Array.from(dropdown.querySelectorAll('div'));
+        const isDuplicate = existingOptions.some(option => option.textContent === value);
+
+        if (isDuplicate) {
+            alert('این مقدار قبلاً اضافه شده است!');
+            return;
+        }
+
         // ایجاد گزینه جدید
         const option = document.createElement('div');
         option.textContent = value;
@@ -30,7 +39,6 @@ function addOption(inputId, dropdownId) {
         alert('لطفاً مقداری وارد کنید!');
     }
 }
-
 // تابع ذخیره یا به‌روزرسانی اطلاعات
 function saveData() {
     const form = document.getElementById('form');

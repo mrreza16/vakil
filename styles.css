@@ -102,10 +102,15 @@ button:active {
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 3px 8px; /* کوچک‌تر شده */
+    padding: 5px; /* کوچک‌تر شده */
+    width: 24px; /* طول و عرض برابر */
+    height: 24px; /* طول و عرض برابر */
     cursor: pointer;
-    font-size: 12px; /* کوچک‌تر شده */
+    font-size: 14px;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-button:hover {
