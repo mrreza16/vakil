@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-  <title>فیلد کشویی</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فیلد کشویی</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div id="container">
-  <div id="input-wrapper">
-    <input type="text" id="input-field">
-    <button id="toggle-button">▼</button>
-  </div>
-  <button id="add-button">+</button>
+    <label for="input-field">خواهان:</label>
+    <div id="input-wrapper">
+        <input type="text" id="input-field" placeholder="لطفا وارد کنید">
+        <button id="add-button">+</button>
+        <button id="toggle-button">▼</button>
+    </div>
+    <ul id="dropdown-list"></ul>
 </div>
-
-<ul id="dropdown-list"></ul>
 
 <script src="script.js"></script>
 
