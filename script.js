@@ -1,3 +1,9 @@
+// متغیرهای全局
+let data = []; // ذخیره تمام رکوردها
+let searchResults = []; // ذخیره نتایج جستجو
+let currentIndex = -1; // اندیس رکورد فعلی در نتایج جستجو
+let isEditing = false; // وضعیت ویرایش
+
 // تابع نمایش یا مخفی کردن منوی آبشاری
 function toggleDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
@@ -49,6 +55,19 @@ function saveData() {
 
     form.reset();
     isEditing = false; // حالت ویرایش غیرفعال می‌شود
+}
+
+// تابع ویرایش اطلاعات
+function editData() {
+    if (currentIndex === -1 || searchResults.length === 0) {
+        alert('هیچ رکوردی برای ویرایش یافت نشد.');
+        return;
+    }
+
+    const currentRecord = searchResults[currentIndex];
+    updateFormWithResult(currentRecord);
+    isEditing = true; // فعال کردن حالت ویرایش
+    alert('حالت ویرایش فعال شد!');
 }
 
 // تابع جستجو
@@ -245,27 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('date').addEventListener('blur', formatDateOnBlur);
     document.getElementById('reportDate').addEventListener('blur', formatDateOnBlur);
 
-
- // تابع ویرایش اطلاعات
-function editData() {
-    if (currentIndex === -1 || searchResults.length === 0) {
-        alert('هیچ رکوردی برای ویرایش یافت نشد.');
-        return;
-    }
-
-    const currentRecord = searchResults[currentIndex];
-    updateFormWithResult(currentRecord);
-    isEditing = true; // فعال کردن حالت ویرایش
-    alert('حالت ویرایش فعال شد!');
-}
-
-// مدیریت رویدادها
-document.addEventListener('DOMContentLoaded', () => {
-    // سایر رویدادها...
-
     // رویدادهای دکمه‌ها
     document.getElementById('saveButton').addEventListener('click', saveData);
-    document.getElementById('editButton').addEventListener('click', editData); // اضافه شده
+    document.getElementById('editButton').addEventListener('click', editData);
     document.getElementById('deleteButton').addEventListener('click', deleteData);
     document.getElementById('clearButton').addEventListener('click', clearForm);
     document.getElementById('searchButton').addEventListener('click', searchData);
