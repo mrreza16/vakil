@@ -245,8 +245,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('date').addEventListener('blur', formatDateOnBlur);
     document.getElementById('reportDate').addEventListener('blur', formatDateOnBlur);
 
+
+ // تابع ویرایش اطلاعات
+function editData() {
+    if (currentIndex === -1 || searchResults.length === 0) {
+        alert('هیچ رکوردی برای ویرایش یافت نشد.');
+        return;
+    }
+
+    const currentRecord = searchResults[currentIndex];
+    updateFormWithResult(currentRecord);
+    isEditing = true; // فعال کردن حالت ویرایش
+    alert('حالت ویرایش فعال شد!');
+}
+
+// مدیریت رویدادها
+document.addEventListener('DOMContentLoaded', () => {
+    // سایر رویدادها...
+
     // رویدادهای دکمه‌ها
     document.getElementById('saveButton').addEventListener('click', saveData);
+    document.getElementById('editButton').addEventListener('click', editData); // اضافه شده
     document.getElementById('deleteButton').addEventListener('click', deleteData);
     document.getElementById('clearButton').addEventListener('click', clearForm);
     document.getElementById('searchButton').addEventListener('click', searchData);

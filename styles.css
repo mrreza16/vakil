@@ -65,30 +65,30 @@ input:focus, select:focus, textarea:focus {
     outline: none;
 }
 
-/* استایل‌های دکمه‌ها */
-.button-row {
-    display: flex;
-    gap: 3mm; /* فاصله بین دکمه‌ها */
-    margin-top: 15px;
-}
-
-button {
-    flex: 1;
-    padding: 10px 20px;
+/* استایل‌های دکمه‌های + */
+.add-button {
+    background-color: #28a745;
+    color: white;
     border: none;
     border-radius: 5px;
-    background: linear-gradient(145deg, #28a745, #218838);
-    color: white;
+    padding: 3px 8px; /* کوچک‌تر شده */
     cursor: pointer;
-    font-size: 14px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    font-size: 12px; /* کوچک‌تر شده */
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background: linear-gradient(145deg, #218838, #1e7e34);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-    transform: translateY(-2px);
+.add-button:hover {
+    background-color: #218838;
+}
+
+/* استایل‌های دکمه‌های جدید */
+#editButton {
+    background: linear-gradient(145deg, #ffc107, #e0a800);
+    color: white;
+}
+
+#editButton:hover {
+    background: linear-gradient(145deg, #e0a800, #d39e00);
 }
 
 button:active {
