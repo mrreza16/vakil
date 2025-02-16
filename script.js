@@ -12,9 +12,9 @@ function toggleDropdown(dropdownId) {
 
 // تابع افزودن گزینه به فیلد
 function addOption(inputId, dropdownId) {
-    const input = document.getElementById(inputId);
-    const dropdown = document.getElementById(dropdownId);
-    const value = input.value.trim();
+    const input = document.getElementById(inputId); // فیلد ورودی
+    const dropdown = document.getElementById(dropdownId); // منوی آبشاری
+    const value = input.value.trim(); // مقدار وارد شده در فیلد
 
     if (value) {
         // بررسی تکراری نبودن مقدار
