@@ -101,7 +101,7 @@
                 <div class="input-with-arrow">
                     <input type="text" id="plaintiffInput" placeholder="مقدار را وارد کنید">
                     <span class="dropdown-arrow" onclick="toggleDropdown('plaintiffDropdown')">&#9660;</span>
-                    <button type="button" class="add-button" onclick="addOption('plaintiffInput', 'plaintiffDropdown')">+</button>
+                    <button class="add-button" onclick="addOption('plaintiffInput', 'plaintiffDropdown')">+</button>
                 </div>
                 <div id="plaintiffDropdown" class="dropdown-menu"></div>
             </div>
@@ -111,7 +111,7 @@
                 <div class="input-with-arrow">
                     <input type="text" id="defendantInput" placeholder="مقدار را وارد کنید">
                     <span class="dropdown-arrow" onclick="toggleDropdown('defendantDropdown')">&#9660;</span>
-                    <button type="button" class="add-button" onclick="addOption('defendantInput', 'defendantDropdown')">+</button>
+                    <button class="add-button" onclick="addOption('defendantInput', 'defendantDropdown')">+</button>
                 </div>
                 <div id="defendantDropdown" class="dropdown-menu"></div>
             </div>
@@ -121,7 +121,7 @@
                 <div class="input-with-arrow">
                     <input type="text" id="panelMembersInput" placeholder="مقدار را وارد کنید">
                     <span class="dropdown-arrow" onclick="toggleDropdown('panelMembersDropdown')">&#9660;</span>
-                    <button type="button" class="add-button" onclick="addOption('panelMembersInput', 'panelMembersDropdown')">+</button>
+                    <button class="add-button" onclick="addOption('panelMembersInput', 'panelMembersDropdown')">+</button>
                 </div>
                 <div id="panelMembersDropdown" class="dropdown-menu"></div>
             </div>
@@ -131,7 +131,7 @@
                 <div class="input-with-arrow">
                     <input type="text" id="cooperatedExpertsInput" placeholder="مقدار را وارد کنید">
                     <span class="dropdown-arrow" onclick="toggleDropdown('cooperatedExpertsDropdown')">&#9660;</span>
-                    <button type="button" class="add-button" onclick="addOption('cooperatedExpertsInput', 'cooperatedExpertsDropdown')">+</button>
+                    <button class="add-button" onclick="addOption('cooperatedExpertsInput', 'cooperatedExpertsDropdown')">+</button>
                 </div>
                 <div id="cooperatedExpertsDropdown" class="dropdown-menu"></div>
             </div>
@@ -141,7 +141,7 @@
                 <div class="input-with-arrow">
                     <input type="text" id="nonCooperatedExpertsInput" placeholder="مقدار را وارد کنید">
                     <span class="dropdown-arrow" onclick="toggleDropdown('nonCooperatedExpertsDropdown')">&#9660;</span>
-                    <button type="button" class="add-button" onclick="addOption('nonCooperatedExpertsInput', 'nonCooperatedExpertsDropdown')">+</button>
+                    <button class="add-button" onclick="addOption('nonCooperatedExpertsInput', 'nonCooperatedExpertsDropdown')">+</button>
                 </div>
                 <div id="nonCooperatedExpertsDropdown" class="dropdown-menu"></div>
             </div>
@@ -171,15 +171,17 @@
             </div>
 
             <!-- دکمه‌های ثبت، حذف و پاک کردن فرم -->
-            <div class="button-row">
-                <button type="button" id="saveButton">ثبت اطلاعات</button>
-                <button type="button" id="deleteButton">حذف اطلاعات</button>
-                <button type="button" id="clearButton">پاک کردن فرم</button>
-            </div>
+           <div class="button-row">
+    <button type="button" id="saveButton">ثبت</button>
+    <button type="button" id="editButton">ویرایش</button>
+    <button type="button" id="deleteButton">حذف</button>
+    <button type="button" id="clearButton">خالی</button>
+</div>
         </form>
 
         <!-- بخش جستجو -->
         <div class="search-section">
+            <!-- سطر اول: فیلد جستجو و دکمه جستجو -->
             <div class="search-row">
                 <label for="searchField">جستجو بر اساس:</label>
                 <select id="searchField">
@@ -207,6 +209,7 @@
                 <button type="button" id="searchButton">جستجو</button>
             </div>
 
+            <!-- سطر دوم: تعداد نتایج و دکمه‌های قبلی و بعدی -->
             <div class="navigation-row">
                 <input type="text" id="resultCount" placeholder="تعداد نتایج" readonly>
                 <button type="button" id="prevButton" disabled>قبلی</button>
