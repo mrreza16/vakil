@@ -3,154 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فیلد کشویی</title>
-    <style>
-        /* استایل کلی صفحه */
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl; /* برای راست‌چین کردن متن */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f5f5f5;
-        }
-
-        /* استایل کانتینر */
-        #container {
-            width: 300px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* استایل لیبل */
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* استایل wrapper ورودی و دکمه‌ها */
-        #input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* استایل فیلد ورودی */
-        #input-field {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        /* استایل دکمه‌ها */
-        #add-button, #toggle-button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 14px;
-        }
-
-        #add-button:hover, #toggle-button:hover {
-            background-color: #45a049;
-        }
-
-        /* استایل لیست کشویی */
-        #dropdown-list {
-            display: none; /* مخفی کردن لیست به صورت پیش‌فرض */
-            list-style-type: none;
-            padding: 0;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            max-height: 150px;
-            overflow-y: auto;
-            background-color: #fff;
-        }
-
-        #dropdown-list li {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        #dropdown-list li:hover {
-            background-color: #f1f1f1;
-        }
-
-        #dropdown-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* استایل نمایش لیست */
-        .show {
-            display: block;
-        }
-    </style>
+    <title>ثبت اطلاعات ابلاغیه</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+<link type="text/css" rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
+    <div class="container">
+        <h1>ثبت اطلاعات ابلاغیه</h1>
+        <form id="form">
+            <!-- ردیف اول: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="type">نوع قرار:</label>
+                    <select id="type" name="type">
+                        <option value="">انتخاب کنید</option>
+                        <option value="کارشناسی">کارشناسی</option>
+                        <option value="تامین دلیل">تامین دلیل</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">تاریخ ابلاغیه:</label>
+                    <input type="text" id="date" name="date" placeholder="yyyy/mm/dd">
+                </div>
+            </div>
 
-<div id="container">
-    <label for="input-field">خواهان:</label>
-    <div id="input-wrapper">
-        <input type="text" id="input-field" placeholder="لطفا وارد کنید">
-        <button id="add-button">+</button>
-        <button id="toggle-button">▼</button>
+            <!-- ردیف دوم: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="courtType">بدوی یا تکمیلی:</label>
+                    <select id="courtType" name="courtType">
+                        <option value="">انتخاب کنید</option>
+                        <option value="بدوی">بدوی</option>
+                        <option value="تکمیلی">تکمیلی</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="individualOrPanel">انفرادی-هیأت:</label>
+                    <select id="individualOrPanel" name="individualOrPanel">
+                        <option value="">انتخاب کنید</option>
+                        <option value="انفرادی">انفرادی</option>
+                        <option value="هیأت">هیأت</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ردیف سوم: دو فیلد -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="city">شهر:</label>
+                    <select id="city" name="city">
+                        <option value="">انتخاب کنید</option>
+                        <option value="زنجان">زنجان</option>
+                        <option value="ابهر">ابهر</option>
+                        <option value="خرمدره">خرمدره</option>
+                        <option value="خدابنده">خدابنده</option>
+                        <option value="ماهنشان">ماهنشان</option>
+                        <option value="طارم">طارم</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="courtCategory">نوع دادگاه:</label>
+                    <select id="courtCategory" name="courtCategory">
+                        <option value="">انتخاب کنید</option>
+                        <option value="حقوقی">حقوقی</option>
+                        <option value="کیفری">کیفری</option>
+                        <option value="بازپرسی">بازپرسی</option>
+                        <option value="دادیاری">دادیاری</option>
+                        <option value="صلح">صلح</option>
+                        <option value="تجدیدنظر">تجدیدنظر</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ردیف چهارم: شماره شعبه و شماره بایگانی -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branchNumber">شماره شعبه:</label>
+                    <input type="text" id="branchNumber" name="branchNumber">
+                </div>
+                <div class="form-group">
+                    <label for="archiveNumber">شماره بایگانی:</label>
+                    <input type="text" id="archiveNumber" name="archiveNumber">
+                </div>
+            </div>
+
+            <!-- فیلد خوانده -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="defendant">خوانده:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="defendantInput" placeholder="نام خوانده را وارد کنید" dir="rtl">
+                        <button type="button" id="addDefendantButton">+</button>
+                        <button type="button" id="toggleDefendantDropdown">▼</button>
+                    </div>
+                    <ul id="defendantDropdown" class="dropdown-menu">
+                        <!-- آیتم‌های منوی کشویی به صورت پویا اضافه می‌شوند -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- فیلد خواهان -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="applicant">خواهان:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="applicantInput" placeholder="نام خواهان را وارد کنید" dir="rtl">
+                        <button type="button" id="addApplicantButton">+</button>
+                        <button type="button" id="toggleApplicantDropdown">▼</button>
+                    </div>
+                    <ul id="applicantDropdown" class="dropdown-menu">
+                        <!-- آیتم‌های منوی کشویی به صورت پویا اضافه می‌شوند -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- فیلد اعضای هیأت کارشناسی -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expertPanel">اعضای هیأت کارشناسی:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="expertPanelInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                        <button type="button" id="addExpertPanelButton">+</button>
+                        <button type="button" id="toggleExpertPanelDropdown">▼</button>
+                    </div>
+                    <ul id="expertPanelDropdown" class="dropdown-menu">
+                        <!-- آیتم‌های منوی کشویی به صورت پویا اضافه می‌شوند -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- فیلد اعضای هیأت که همکاری کردند -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cooperatedMembers">اعضای هیأت که همکاری کردند:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="cooperatedMembersInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                        <button type="button" id="addCooperatedMembersButton">+</button>
+                        <button type="button" id="toggleCooperatedMembersDropdown">▼</button>
+                    </div>
+                    <ul id="cooperatedMembersDropdown" class="dropdown-menu">
+                        <!-- آیتم‌های منوی کشویی به صورت پویا اضافه می‌شوند -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- فیلد اعضای هیأت که همکاری نکردند -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nonCooperatedMembers">اعضای هیأت که همکاری نکردند:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="nonCooperatedMembersInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                        <button type="button" id="addNonCooperatedMembersButton">+</button>
+                        <button type="button" id="toggleNonCooperatedMembersDropdown">▼</button>
+                    </div>
+                    <ul id="nonCooperatedMembersDropdown" class="dropdown-menu">
+                        <!-- آیتم‌های منوی کشویی به صورت پویا اضافه می‌شوند -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- سایر فیلدها -->
+            <label for="noticeNumber">شماره ابلاغیه:</label>
+            <input type="text" id="noticeNumber" name="noticeNumber">
+
+            <label for="caseNumber">شماره پرونده:</label>
+            <input type="text" id="caseNumber" name="caseNumber">
+
+            <!-- فیلد تاریخ ارسال گزارش -->
+            <label for="reportDate">تاریخ ارسال گزارش:</label>
+            <input type="text" id="reportDate" name="reportDate" placeholder="yyyy/mm/dd">
+
+            <!-- فیلد کد رهگیری -->
+            <label for="trackingCode">کد رهگیری:</label>
+            <input type="text" id="trackingCode" name="trackingCode">
+
+            <!-- ردیف پنجم: مبلغ و وضعیت -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="amount">مبلغ:</label>
+                    <input type="text" id="amount" name="amount">
+                </div>
+                <div class="form-group">
+                    <label for="status">وضعیت:</label>
+                    <select id="status" name="status">
+                        <option value="">انتخاب کنید</option>
+                        <option value="دریافت شده">دریافت شده</option>
+                        <option value="دریافت نشده">دریافت نشده</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- دکمه‌های ثبت، ویرایش، حذف و خالی کردن فرم -->
+            <div class="button-row">
+                <button type="button" id="saveButton">ثبت</button>
+                <button type="button" id="editButton">ویرایش</button>
+                <button type="button" id="deleteButton">حذف</button>
+                <button type="button" id="clearButton">خالی</button>
+            </div>
+        </form>
+
+        <!-- بخش جستجو -->
+        <div class="search-section">
+            <!-- سطر اول: فیلد جستجو و دکمه جستجو -->
+            <div class="search-row">
+                <label for="searchField">جستجو بر اساس:</label>
+                <select id="searchField">
+                    <option value="type">نوع قرار</option>
+                    <option value="date">تاریخ ابلاغیه</option>
+                    <option value="courtType">بدوی یا تکمیلی</option>
+                    <option value="individualOrPanel">انفرادی-هیأت</option>
+                    <option value="city">شهر</option>
+                    <option value="courtCategory">نوع دادگاه</option>
+                    <option value="branchNumber">شماره شعبه</option>
+                    <option value="archiveNumber">شماره بایگانی</option>
+                    <option value="defendant">خوانده</option>
+                    <option value="applicant">خواهان</option>
+                    <option value="expertPanel">اعضای هیأت کارشناسی</option>
+                    <option value="cooperatedMembers">اعضای هیأت که همکاری کردند</option>
+                    <option value="nonCooperatedMembers">اعضای هیأت که همکاری نکردند</option>
+                    <option value="noticeNumber">شماره ابلاغیه</option>
+                    <option value="caseNumber">شماره پرونده</option>
+                    <option value="reportDate">تاریخ ارسال گزارش</option>
+                    <option value="trackingCode">کد رهگیری</option>
+                    <option value="amount">مبلغ</option>
+                    <option value="status">وضعیت</option>
+                </select>
+                <input type="text" id="searchTerm" placeholder="عبارت جستجو را وارد کنید">
+                <button type="button" id="searchButton">جستجو</button>
+            </div>
+
+            <!-- سطر دوم: تعداد نتایج و دکمه‌های قبلی و بعدی -->
+            <div class="navigation-row">
+                <input type="text" id="resultCount" placeholder="تعداد نتایج" readonly>
+                <button type="button" id="prevButton">قبلی</button>
+                <button type="button" id="nextButton">بعدی</button>
+            </div>
+        </div>
     </div>
-    <ul id="dropdown-list"></ul>
-</div>
-
-<script>
-    // انتخاب عناصر مورد نیاز
-    const inputField = document.getElementById('input-field');
-    const addButton = document.getElementById('add-button');
-    const toggleButton = document.getElementById('toggle-button');
-    const dropdownList = document.getElementById('dropdown-list');
-
-    // افزودن آیتم به لیست
-    addButton.addEventListener('click', () => {
-        const inputValue = inputField.value.trim();
-        if (inputValue) {
-            const newItem = document.createElement('li');
-            newItem.textContent = inputValue;
-            dropdownList.appendChild(newItem);
-            inputField.value = ''; // پاک کردن فیلد ورودی
-        }
-    });
-
-    // باز و بسته کردن لیست
-    toggleButton.addEventListener('click', (event) => {
-        event.stopPropagation(); // جلوگیری از بسته شدن لیست به دلیل کلیک روی دکمه
-        dropdownList.classList.toggle('show');
-    });
-
-    // بستن لیست هنگام کلیک خارج از آن
-    window.addEventListener('click', () => {
-        if (dropdownList.classList.contains('show')) {
-            dropdownList.classList.remove('show');
-        }
-    });
-
-    // انتخاب آیتم از لیست و قرار دادن آن در فیلد ورودی
-    dropdownList.addEventListener('click', (event) => {
-        if (event.target.tagName === 'LI') {
-            inputField.value = event.target.textContent;
-            dropdownList.classList.remove('show');
-        }
-    });
-</script>
-
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
