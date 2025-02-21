@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveButton = document.getElementById('saveButton');
     const editButton = document.getElementById('editButton');
     const deleteButton = document.getElementById('deleteButton');
-    const clearButton = document.getElementById('clearButton');
+    const newButton = document.getElementById('newButton');
     const searchButton = document.getElementById('searchButton');
     const searchField = document.getElementById('searchField');
     const searchTerm = document.getElementById('searchTerm');
@@ -37,9 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleNonCooperatedMembersDropdown = document.getElementById('toggleNonCooperatedMembersDropdown');
     const nonCooperatedMembersDropdown = document.getElementById('nonCooperatedMembersDropdown');
 
-    let records = []; // ذخیره‌سازی رکوردها
-    let currentRecordIndex = -1; // رکورد جاری
-    let searchResults = []; // نتایج جستجو
+    // عناصر پنجره نمایش نام و شماره تماس
+    const contactModal = document.getElementById('contactModal');
+    const contactName = document.getElementById('contactName');
+    const contactPhone = document.getElementById('contactPhone');
+    const callButton = document.getElementById('callButton');
+    const messageButton = document.getElementById('messageButton');
+    const cancelButton = document.getElementById('cancelButton');
+    const closeModal = document.getElementById('closeModal');
+
+    let records = [];
+    let currentRecordIndex = -1;
+    let searchResults = [];
+
+    // بارگذاری داده‌ها از LocalStorage در شروع برنامه
+    function loadFromLocalStorage() {
+        const storedRecords = localStorage.getItem('formRecords');
+        if (storedRecords) {
+            records = JSON.parse(storedRecords);
+            if (records.length > 0) {
+                currentRecordIndex = 0;
+                loadRecord(records[currentRecordIndex]);
+                updateNavigationButtons();
+            }
+        }
+    }
+
+    // ذخیره داده‌ها در LocalStorage
+    function saveToLocalStorage() {
+        localStorage.setItem('formRecords', JSON.stringify(records));
+    }
 
     // غیرفعال کردن ویرایش فیلدها
     const disableForm = () => {
@@ -61,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (element.tagName !== 'BUTTON') element.value = '';
         });
 
-        // پاک کردن منوهای آبشاری
         defendantDropdown.innerHTML = '';
         applicantDropdown.innerHTML = '';
         expertPanelDropdown.innerHTML = '';
@@ -69,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         nonCooperatedMembersDropdown.innerHTML = '';
 
         currentRecordIndex = -1;
-        enableForm(); // فعال کردن فیلدها پس از پاک کردن فرم
     };
 
     // تبدیل تاریخ به فرمت yyyy/mm/dd
@@ -81,14 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // اعمال فرمت تاریخ هنگام خروج از فیلد
-    const dateFields = document.querySelectorAll('input[name="date"], input[name="reportDate"]');
+    const dateFields = document.querySelectorAll('.field-date, .field-report-date');
     dateFields.forEach(field => {
         field.addEventListener('blur', () => {
             field.value = formatDate(field.value.replace(/\D/g, ''));
         });
     });
 
-    // ثبت رکورد جدید
+    // ثبت رکورد (جدید یا ویرایش)
     saveButton.addEventListener('click', () => {
         const formData = new FormData(form);
         const record = {};
@@ -96,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             record[key] = value;
         });
 
-        // افزودن مقادیر منوهای آبشاری به رکورد
         record.defendants = Array.from(defendantDropdown.children).map(li => li.textContent);
         record.applicants = Array.from(applicantDropdown.children).map(li => li.textContent);
         record.expertPanel = Array.from(expertPanelDropdown.children).map(li => li.textContent);
@@ -104,15 +128,21 @@ document.addEventListener('DOMContentLoaded', () => {
         record.nonCooperatedMembers = Array.from(nonCooperatedMembersDropdown.children).map(li => li.textContent);
 
         if (currentRecordIndex === -1) {
-            // افزودن رکورد جدید
             records.push(record);
+            saveToLocalStorage();
+            clearForm();
+            enableForm();
         } else {
-            // ویرایش رکورد موجود
-            records[currentRecordIndex] = record;
+            if (searchResults.length > 0) {
+                searchResults[currentRecordIndex] = record;
+                const originalIndex = records.findIndex(r => r === searchResults[currentRecordIndex]);
+                if (originalIndex !== -1) records[originalIndex] = record;
+            } else {
+                records[currentRecordIndex] = record;
+            }
+            saveToLocalStorage();
+            disableForm();
         }
-
-        clearForm(); // پاک کردن فیلدها و منوهای آبشاری پس از ثبت
-        enableForm(); // فعال کردن فیلدها پس از ثبت
     });
 
     // جستجوی رکوردها
@@ -125,57 +155,76 @@ document.addEventListener('DOMContentLoaded', () => {
             currentRecordIndex = 0;
             loadRecord(searchResults[currentRecordIndex]);
             resultCount.value = `${currentRecordIndex + 1}/${searchResults.length}`;
-            prevButton.disabled = currentRecordIndex === 0;
-            nextButton.disabled = currentRecordIndex === searchResults.length - 1;
-            disableForm(); // غیرفعال کردن فیلدها پس از بارگذاری رکورد
+            updateNavigationButtons();
+            disableForm();
         } else {
             alert('رکوردی یافت نشد.');
         }
 
-        searchTerm.value = ''; // پاک کردن مقدار جستجو
+        searchTerm.value = '';
     });
 
     // بارگذاری رکورد در فرم
     const loadRecord = (record) => {
         Object.keys(record).forEach(key => {
             const element = form.elements[key];
-            if (element) element.value = record[key];
+            if (element) element.value = record[key] || '';
         });
 
-        // بارگذاری منوهای آبشاری
         defendantDropdown.innerHTML = record.defendants?.map(defendant => `<li>${defendant}</li>`).join('') || '';
         applicantDropdown.innerHTML = record.applicants?.map(applicant => `<li>${applicant}</li>`).join('') || '';
         expertPanelDropdown.innerHTML = record.expertPanel?.map(expert => `<li>${expert}</li>`).join('') || '';
         cooperatedMembersDropdown.innerHTML = record.cooperatedMembers?.map(member => `<li>${member}</li>`).join('') || '';
         nonCooperatedMembersDropdown.innerHTML = record.nonCooperatedMembers?.map(member => `<li>${member}</li>`).join('') || '';
-
-        disableForm(); // غیرفعال کردن فیلدها پس از بارگذاری
+        disableForm();
     };
 
     // ویرایش رکورد
     editButton.addEventListener('click', () => {
         if (currentRecordIndex !== -1) {
-            enableForm(); // فعال کردن فیلدها برای ویرایش
+            enableForm();
         } else {
-            alert('لطفاً ابتدا یک رکورد را جستجو کنید.');
+            alert('لطفاً ابتدا یک رکورد را جستجو کنید یا انتخاب کنید.');
         }
     });
 
     // حذف رکورد
     deleteButton.addEventListener('click', () => {
         if (currentRecordIndex !== -1) {
-            records.splice(currentRecordIndex, 1);
+            if (searchResults.length > 0) {
+                const recordToDelete = searchResults[currentRecordIndex];
+                searchResults.splice(currentRecordIndex, 1);
+                const originalIndex = records.findIndex(r => r === recordToDelete);
+                if (originalIndex !== -1) records.splice(originalIndex, 1);
+            } else {
+                records.splice(currentRecordIndex, 1);
+            }
+            saveToLocalStorage();
             clearForm();
-            disableForm(); // غیرفعال کردن فیلدها پس از حذف
+            enableForm();
+            if (searchResults.length > 0 && currentRecordIndex < searchResults.length) {
+                loadRecord(searchResults[currentRecordIndex]);
+                resultCount.value = `${currentRecordIndex + 1}/${searchResults.length}`;
+            } else if (records.length > 0) {
+                currentRecordIndex = Math.min(currentRecordIndex, records.length - 1);
+                loadRecord(records[currentRecordIndex]);
+            } else {
+                currentRecordIndex = -1;
+            }
+            updateNavigationButtons();
         } else {
             alert('لطفاً ابتدا یک رکورد را جستجو کنید.');
         }
     });
 
-    // پاک کردن فرم و منوهای آبشاری
-    clearButton.addEventListener('click', () => {
+    // دکمه "جدید" برای ایجاد رکورد جدید
+    newButton.addEventListener('click', () => {
         clearForm();
-        enableForm(); // فعال کردن فیلدها پس از پاک کردن
+        enableForm();
+        searchResults = [];
+        resultCount.value = '';
+        prevButton.disabled = true;
+        nextButton.disabled = true;
     });
 
     // مدیریت منوهای آبشاری
@@ -229,49 +278,146 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // جابجایی بین رکوردها
+    // به‌روزرسانی وضعیت دکمه‌های ناوبری
+    function updateNavigationButtons() {
+        if (searchResults.length > 0) {
+            prevButton.disabled = currentRecordIndex === searchResults.length - 1;
+            nextButton.disabled = currentRecordIndex === 0;
+        } else {
+            prevButton.disabled = currentRecordIndex === records.length - 1;
+            nextButton.disabled = currentRecordIndex === 0 || currentRecordIndex === -1;
+        }
+    }
+
+    // جابجایی بین رکوردها - "قبلی" به رکورد بعدی می‌ره
     prevButton.addEventListener('click', () => {
         if (searchResults.length > 0) {
-            // جابجایی بین نتایج جستجو
-            if (currentRecordIndex > 0) {
-                currentRecordIndex--;
-                loadRecord(searchResults[currentRecordIndex]);
-                resultCount.value = `${currentRecordIndex + 1}/${searchResults.length}`;
-                prevButton.disabled = currentRecordIndex === 0;
-                nextButton.disabled = currentRecordIndex === searchResults.length - 1;
-            }
-        } else {
-            // جابجایی بین رکوردهای ثبت‌شده
-            if (currentRecordIndex > 0) {
-                currentRecordIndex--;
-                loadRecord(records[currentRecordIndex]);
-                prevButton.disabled = currentRecordIndex === 0;
-                nextButton.disabled = false;
-            }
-        }
-    });
-
-    nextButton.addEventListener('click', () => {
-        if (searchResults.length > 0) {
-            // جابجایی بین نتایج جستجو
             if (currentRecordIndex < searchResults.length - 1) {
                 currentRecordIndex++;
                 loadRecord(searchResults[currentRecordIndex]);
                 resultCount.value = `${currentRecordIndex + 1}/${searchResults.length}`;
-                prevButton.disabled = currentRecordIndex === 0;
-                nextButton.disabled = currentRecordIndex === searchResults.length - 1;
+                updateNavigationButtons();
             }
         } else {
-            // جابجایی بین رکوردهای ثبت‌شده
             if (currentRecordIndex < records.length - 1) {
                 currentRecordIndex++;
                 loadRecord(records[currentRecordIndex]);
-                nextButton.disabled = currentRecordIndex === records.length - 1;
-                prevButton.disabled = false;
+                updateNavigationButtons();
             }
         }
     });
 
-    // فعال کردن فرم در ابتدا
-    enableForm(); // فیلدها در ابتدا فعال باشند
+    // جابجایی بین رکوردها - "بعدی" به رکورد قبلی می‌ره
+    nextButton.addEventListener('click', () => {
+        if (searchResults.length > 0) {
+            if (currentRecordIndex > 0) {
+                currentRecordIndex--;
+                loadRecord(searchResults[currentRecordIndex]);
+                resultCount.value = `${currentRecordIndex + 1}/${searchResults.length}`;
+                updateNavigationButtons();
+            }
+        } else {
+            if (currentRecordIndex > 0) {
+                currentRecordIndex--;
+                loadRecord(records[currentRecordIndex]);
+                updateNavigationButtons();
+            }
+        }
+    });
+
+    // مدیریت پنجره نمایش نام و شماره تماس
+    const showContactModal = (name, phone) => {
+        contactName.textContent = name;
+        contactPhone.textContent = phone;
+        contactModal.style.display = 'flex';
+    };
+
+    const hideContactModal = () => {
+        contactModal.style.display = 'none';
+    };
+
+    // کلیک روی آیتم‌های منوهای آبشاری
+    const setupContactModal = (dropdown) => {
+        dropdown.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                const text = event.target.textContent;
+                const lastSpaceIndex = text.lastIndexOf(' ');
+                if (lastSpaceIndex !== -1) {
+                    const name = text.slice(0, lastSpaceIndex).trim();
+                    const phone = text.slice(lastSpaceIndex + 1).trim();
+                    if (name && phone) {
+                        showContactModal(name, phone);
+                    }
+                }
+            }
+        });
+    };
+
+    // تنظیم پنجره نمایش برای منوهای آبشاری
+    setupContactModal(defendantDropdown);
+    setupContactModal(applicantDropdown);
+    setupContactModal(expertPanelDropdown);
+    setupContactModal(cooperatedMembersDropdown);
+    setupContactModal(nonCooperatedMembersDropdown);
+
+    // مدیریت تماس و ارسال پیام
+    callButton.addEventListener('click', () => {
+        const phone = contactPhone.textContent;
+        if (phone) {
+            window.open(`tel:${phone}`);
+        }
+    });
+
+    messageButton.addEventListener('click', () => {
+        const phone = contactPhone.textContent;
+        if (phone) {
+            window.open(`sms:${phone}`);
+        }
+    });
+
+    // بستن پنجره
+    cancelButton.addEventListener('click', hideContactModal);
+    closeModal.addEventListener('click', hideContactModal);
+    contactModal.addEventListener('click', (event) => {
+        if (event.target === contactModal) {
+            hideContactModal();
+        }
+    });
+
+    // مدیریت دکمه برگشت در موبایل
+    document.addEventListener('backbutton', (event) => {
+        event.preventDefault(); // جلوگیری از رفتار پیش‌فرض دکمه برگشت
+
+        // اگه مودال بازه، فقط مودال رو ببند
+        if (contactModal.style.display === 'flex') {
+            hideContactModal();
+        }
+        // اگه در حالت جستجو هستیم و رکوردی انتخاب شده، به حالت اصلی برگرد
+        else if (searchResults.length > 0) {
+            searchResults = [];
+            resultCount.value = '';
+            if (records.length > 0) {
+                currentRecordIndex = 0;
+                loadRecord(records[currentRecordIndex]);
+            } else {
+                clearForm();
+                currentRecordIndex = -1;
+            }
+            updateNavigationButtons();
+        }
+        // اگه در حالت مرور رکوردها هستیم و رکوردی انتخاب شده، به عقب برو
+        else if (currentRecordIndex > 0) {
+            currentRecordIndex--;
+            loadRecord(records[currentRecordIndex]);
+            updateNavigationButtons();
+        }
+        // اگه به صفحه اصلی رسیدیم (هیچ رکوردی انتخاب نشده)، از برنامه خارج شو
+        else if (currentRecordIndex === -1) {
+            navigator.app.exitApp(); // خروج از اپلیکیشن
+        }
+    }, false);
+
+    // فعال کردن فرم در ابتدا و بارگذاری داده‌ها
+    enableForm();
+    loadFromLocalStorage();
 });

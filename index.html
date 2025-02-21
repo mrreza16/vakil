@@ -11,12 +11,16 @@
 <body>
     <div class="container">
         <h1>ثبت اطلاعات ابلاغیه</h1>
+        <!-- اضافه کردن عکس بالای فرم -->
+        <div class="header-image">
+            <img src="1.png" alt="لوگوی برنامه" />
+        </div>
         <form id="form">
             <!-- ردیف اول: دو فیلد -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="type">نوع قرار:</label>
-                    <select id="type" name="type">
+                    <select id="type" name="type" class="field-type">
                         <option value="">انتخاب کنید</option>
                         <option value="کارشناسی">کارشناسی</option>
                         <option value="تامین دلیل">تامین دلیل</option>
@@ -24,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date">تاریخ ابلاغیه:</label>
-                    <input type="text" id="date" name="date" placeholder="yyyy/mm/dd">
+                    <input type="text" id="date" name="date" class="field-date" placeholder="yyyy/mm/dd">
                 </div>
             </div>
 
@@ -32,7 +36,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="courtType">بدوی یا تکمیلی:</label>
-                    <select id="courtType" name="courtType">
+                    <select id="courtType" name="courtType" class="field-court-type">
                         <option value="">انتخاب کنید</option>
                         <option value="بدوی">بدوی</option>
                         <option value="تکمیلی">تکمیلی</option>
@@ -40,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label for="individualOrPanel">انفرادی-هیأت:</label>
-                    <select id="individualOrPanel" name="individualOrPanel">
+                    <select id="individualOrPanel" name="individualOrPanel" class="field-individual-or-panel">
                         <option value="">انتخاب کنید</option>
                         <option value="انفرادی">انفرادی</option>
                         <option value="هیأت">هیأت</option>
@@ -52,7 +56,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="city">شهر:</label>
-                    <select id="city" name="city">
+                    <select id="city" name="city" class="field-city">
                         <option value="">انتخاب کنید</option>
                         <option value="زنجان">زنجان</option>
                         <option value="ابهر">ابهر</option>
@@ -64,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <label for="courtCategory">نوع دادگاه:</label>
-                    <select id="courtCategory" name="courtCategory">
+                    <select id="courtCategory" name="courtCategory" class="field-court-category">
                         <option value="">انتخاب کنید</option>
                         <option value="حقوقی">حقوقی</option>
                         <option value="کیفری">کیفری</option>
@@ -80,11 +84,11 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="branchNumber">شماره شعبه:</label>
-                    <input type="text" id="branchNumber" name="branchNumber">
+                    <input type="text" id="branchNumber" name="branchNumber" class="field-branch-number">
                 </div>
                 <div class="form-group">
                     <label for="archiveNumber">شماره بایگانی:</label>
-                    <input type="text" id="archiveNumber" name="archiveNumber">
+                    <input type="text" id="archiveNumber" name="archiveNumber" class="field-archive-number">
                 </div>
             </div>
 
@@ -92,8 +96,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="defendant">خوانده:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="defendantInput" placeholder="نام خوانده را وارد کنید" dir="rtl">
+                    <div class="input-wrapper defendant-wrapper">
+                        <input type="text" id="defendantInput" name="defendant" class="field-defendant" placeholder="نام خوانده را وارد کنید" dir="rtl">
                         <button type="button" id="addDefendantButton">+</button>
                         <button type="button" id="toggleDefendantDropdown">▼</button>
                     </div>
@@ -107,8 +111,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="applicant">خواهان:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="applicantInput" placeholder="نام خواهان را وارد کنید" dir="rtl">
+                    <div class="input-wrapper applicant-wrapper">
+                        <input type="text" id="applicantInput" name="applicant" class="field-applicant" placeholder="نام خواهان را وارد کنید" dir="rtl">
                         <button type="button" id="addApplicantButton">+</button>
                         <button type="button" id="toggleApplicantDropdown">▼</button>
                     </div>
@@ -122,8 +126,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="expertPanel">اعضای هیأت کارشناسی:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="expertPanelInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                    <div class="input-wrapper expert-panel-wrapper">
+                        <input type="text" id="expertPanelInput" name="expertPanel" class="field-expert-panel" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
                         <button type="button" id="addExpertPanelButton">+</button>
                         <button type="button" id="toggleExpertPanelDropdown">▼</button>
                     </div>
@@ -137,8 +141,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="cooperatedMembers">اعضای هیأت که همکاری کردند:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="cooperatedMembersInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                    <div class="input-wrapper cooperated-members-wrapper">
+                        <input type="text" id="cooperatedMembersInput" name="cooperatedMembers" class="field-cooperated-members" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
                         <button type="button" id="addCooperatedMembersButton">+</button>
                         <button type="button" id="toggleCooperatedMembersDropdown">▼</button>
                     </div>
@@ -152,8 +156,8 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="nonCooperatedMembers">اعضای هیأت که همکاری نکردند:</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="nonCooperatedMembersInput" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
+                    <div class="input-wrapper non-cooperated-members-wrapper">
+                        <input type="text" id="nonCooperatedMembersInput" name="nonCooperatedMembers" class="field-non-cooperated-members" placeholder="نام عضو هیأت را وارد کنید" dir="rtl">
                         <button type="button" id="addNonCooperatedMembersButton">+</button>
                         <button type="button" id="toggleNonCooperatedMembersDropdown">▼</button>
                     </div>
@@ -165,28 +169,28 @@
 
             <!-- سایر فیلدها -->
             <label for="noticeNumber">شماره ابلاغیه:</label>
-            <input type="text" id="noticeNumber" name="noticeNumber">
+            <input type="text" id="noticeNumber" name="noticeNumber" class="field-notice-number">
 
             <label for="caseNumber">شماره پرونده:</label>
-            <input type="text" id="caseNumber" name="caseNumber">
+            <input type="text" id="caseNumber" name="caseNumber" class="field-case-number">
 
             <!-- فیلد تاریخ ارسال گزارش -->
             <label for="reportDate">تاریخ ارسال گزارش:</label>
-            <input type="text" id="reportDate" name="reportDate" placeholder="yyyy/mm/dd">
+            <input type="text" id="reportDate" name="reportDate" class="field-report-date" placeholder="yyyy/mm/dd">
 
             <!-- فیلد کد رهگیری -->
             <label for="trackingCode">کد رهگیری:</label>
-            <input type="text" id="trackingCode" name="trackingCode">
+            <input type="text" id="trackingCode" name="trackingCode" class="field-tracking-code">
 
             <!-- ردیف پنجم: مبلغ و وضعیت -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="amount">مبلغ:</label>
-                    <input type="text" id="amount" name="amount">
+                    <input type="text" id="amount" name="amount" class="field-amount">
                 </div>
                 <div class="form-group">
                     <label for="status">وضعیت:</label>
-                    <select id="status" name="status">
+                    <select id="status" name="status" class="field-status">
                         <option value="">انتخاب کنید</option>
                         <option value="دریافت شده">دریافت شده</option>
                         <option value="دریافت نشده">دریافت نشده</option>
@@ -199,45 +203,59 @@
                 <button type="button" id="saveButton">ثبت</button>
                 <button type="button" id="editButton">ویرایش</button>
                 <button type="button" id="deleteButton">حذف</button>
-                <button type="button" id="clearButton">خالی</button>
+                <button type="button" id="newButton">جدید</button>
             </div>
         </form>
 
         <!-- بخش جستجو -->
         <div class="search-section">
-            <!-- سطر اول: فیلد جستجو و دکمه جستجو -->
+            <!-- سطر اول: فیلد جستجو -->
             <div class="search-row">
-                <label for="searchField">جستجو بر اساس:</label>
-                <select id="searchField">
-                    <option value="type">نوع قرار</option>
-                    <option value="date">تاریخ ابلاغیه</option>
-                    <option value="courtType">بدوی یا تکمیلی</option>
-                    <option value="individualOrPanel">انفرادی-هیأت</option>
-                    <option value="city">شهر</option>
-                    <option value="courtCategory">نوع دادگاه</option>
-                    <option value="branchNumber">شماره شعبه</option>
-                    <option value="archiveNumber">شماره بایگانی</option>
-                    <option value="defendant">خوانده</option>
-                    <option value="applicant">خواهان</option>
-                    <option value="expertPanel">اعضای هیأت کارشناسی</option>
-                    <option value="cooperatedMembers">اعضای هیأت که همکاری کردند</option>
-                    <option value="nonCooperatedMembers">اعضای هیأت که همکاری نکردند</option>
-                    <option value="noticeNumber">شماره ابلاغیه</option>
-                    <option value="caseNumber">شماره پرونده</option>
-                    <option value="reportDate">تاریخ ارسال گزارش</option>
-                    <option value="trackingCode">کد رهگیری</option>
-                    <option value="amount">مبلغ</option>
-                    <option value="status">وضعیت</option>
-                </select>
-                <input type="text" id="searchTerm" placeholder="عبارت جستجو را وارد کنید">
-                <button type="button" id="searchButton">جستجو</button>
+                <div class="search-group">
+                    <label for="searchField">جستجو بر اساس:</label>
+                    <select id="searchField">
+                        <option value="type">نوع قرار</option>
+                        <option value="date">تاریخ ابلاغیه</option>
+                        <option value="courtType">بدوی یا تکمیلی</option>
+                        <option value="individualOrPanel">انفرادی-هیأت</option>
+                        <option value="city">شهر</option>
+                        <option value="courtCategory">نوع دادگاه</option>
+                        <option value="branchNumber">شماره شعبه</option>
+                        <option value="archiveNumber">شماره بایگانی</option>
+                        <option value="noticeNumber">شماره ابلاغیه</option>
+                        <option value="caseNumber">شماره پرونده</option>
+                        <option value="reportDate">تاریخ ارسال گزارش</option>
+                        <option value="trackingCode">کد رهگیری</option>
+                        <option value="amount">مبلغ</option>
+                        <option value="status">وضعیت</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label for="searchTerm">عبارت جستجو:</label>
+                    <input type="text" id="searchTerm" placeholder="عبارت جستجو را وارد کنید">
+                </div>
             </div>
 
-            <!-- سطر دوم: تعداد نتایج و دکمه‌های قبلی و بعدی -->
+            <!-- سطر دوم: دکمه‌ها و تعداد نتایج -->
             <div class="navigation-row">
-                <input type="text" id="resultCount" placeholder="تعداد نتایج" readonly>
+                <button type="button" id="searchButton">جستجو</button>
                 <button type="button" id="prevButton">قبلی</button>
                 <button type="button" id="nextButton">بعدی</button>
+                <input type="text" id="resultCount" placeholder="تعداد نتایج" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- پنجره نمایش نام و شماره تماس -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">×</span>
+            <h2 id="contactName"></h2>
+            <p id="contactPhone"></p>
+            <div class="modal-actions">
+                <button id="callButton" class="modal-button">☎</button>
+                <button id="messageButton" class="modal-button">✉</button>
+                <button id="cancelButton" class="modal-button cancel">✖</button>
             </div>
         </div>
     </div>
